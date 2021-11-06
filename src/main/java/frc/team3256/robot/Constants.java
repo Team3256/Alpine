@@ -13,6 +13,4 @@ public final class Constants {
     public static class IDConstants {
         public static final int pigeonID = 0;
     }
-
-    public static class LoggingConstants { }
 }
