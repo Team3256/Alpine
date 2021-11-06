@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.team3256.robot.commands.ExampleCommand;
-import frc.team3256.robot.subsystems.ExampleSubsystem;
+import frc.team3256.robot.subsystems.SwerveDrive;
+import frc.team3256.robot.commands.SwerveCommand;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -14,12 +16,12 @@ import frc.team3256.robot.subsystems.ExampleSubsystem;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+    private final SwerveDrive swerveDrive = new SwerveDrive();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+//        swerveDrive.setDefaultCommand(
+//                new SwerveCommand();)
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -37,8 +39,8 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return m_autoCommand;
-    }
+//    public Command getAutonomousCommand() {
+//        // An ExampleCommand will run in autonomous
+////        return m_autoCommand;
+//    }
 }
