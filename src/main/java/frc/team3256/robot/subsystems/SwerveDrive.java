@@ -17,11 +17,11 @@ public class SwerveDrive extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
     }
-    /*
-    *
-    *
-    *
-    *
+    /**
+    * Drives a swerve drive drivebase using {@link SwerveDriveKinematics}
+    * @param vx The velocity in the x direction relative to the field
+    * @param vy The velocity in the y direction relative to the field
+    * @param omega The angular velocity in rad/s of the robot
      */
     public void drive(double vx, double vy, double omega) {
         Translation2d frontLeft = new Translation2d(kFrontLeft[0], kFrontLeft[1]);
