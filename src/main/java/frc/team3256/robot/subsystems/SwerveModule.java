@@ -1,8 +1,8 @@
 package frc.team3256.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PWMSparkMax;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -13,11 +13,11 @@ import frc.team3256.robot.Constants;
 
 public class SwerveModule {
 
-    private final Talon m_driveMotor;
-    private final Talon m_turningMotor;
+    private final TalonFX m_driveMotor;
+    private final TalonFX m_turningMotor;
 
-    private final Encoder m_driveEncoder;
-    private final Encoder m_turningEncoder;
+//    private final Encoder m_driveEncoder;
+//    private final Encoder m_turningEncoder;
 
     // Gains are for example purposes only - must be determined for your own robot!
     private final PIDController m_drivePIDController = new PIDController(1, 0, 0);
@@ -40,23 +40,10 @@ public class SwerveModule {
      *
      * @param driveMotorChannel PWM output for the drive motor.
      * @param turningMotorChannel PWM output for the turning motor.
-     * @param driveEncoderChannelA DIO input for the drive encoder channel A
-     * @param driveEncoderChannelB DIO input for the drive encoder channel B
-     * @param turningEncoderChannelA DIO input for the turning encoder channel A
-     * @param turningEncoderChannelB DIO input for the turning encoder channel B
      */
-    public SwerveModule(
-            int driveMotorChannel,
-            int turningMotorChannel,
-            int driveEncoderChannelA,
-            int driveEncoderChannelB,
-            int turningEncoderChannelA,
-            int turningEncoderChannelB) {
-        m_driveMotor = new Talon(driveMotorChannel);
-        m_turningMotor = new Talon(turningMotorChannel);
-
-        m_driveEncoder = new Encoder(driveEncoderChannelA, driveEncoderChannelB);
-        m_turningEncoder = new Encoder(turningEncoderChannelA, turningEncoderChannelB);
+    public SwerveModule(int driveMotorChannel, int turningMotorChannel) {
+        m_driveMotor = new TalonFX(driveMotorChannel);
+        m_turningMotor = new TalonFX(turningMotorChannel);
 
         // Set the distance per pulse for the drive encoder. We can simply use the
         // distance traveled for one rotation of the wheel divided by the encoder

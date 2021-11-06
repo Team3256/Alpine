@@ -1,5 +1,6 @@
 package frc.team3256.robot.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -9,16 +10,22 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.team3256.robot.Constants.AutoConstants.*;
+import static frc.team3256.robot.Constants.AutoConstants;
 
 public class SwerveDrive extends SubsystemBase {
-    private final Translation2d frontLeft = new Translation2d(kFrontLeft[0], kFrontLeft[1]);
-    private final Translation2d frontRight = new Translation2d(kFrontRight[0], kFrontRight[1]);
-    private final Translation2d backLeft = new Translation2d(kBackLeft[0], kBackLeft[1]);
-    private final Translation2d backRight = new Translation2d(kBackRight[0], kBackRight[1]);
+    private final Translation2d frontLeft = new Translation2d(AutoConstants.FRONT_LEFT[0], AutoConstants.FRONT_LEFT[1]);
+    private final Translation2d frontRight = new Translation2d(AutoConstants.FRONT_RIGHT[0], AutoConstants.FRONT_RIGHT[1]);
+    private final Translation2d backLeft = new Translation2d(AutoConstants.BACK_LEFT[0], AutoConstants.BACK_LEFT[1]);
+    private final Translation2d backRight = new Translation2d(AutoConstants.BACK_RIGHT[0], AutoConstants.BACK_RIGHT[1]);
+
+    private final SwerveModule m_frontLeftModule = new SwerveModule();
+    private final SwerveModule m_frontRightModule = new SwerveModule();
+    private final SwerveModule m_backLeftModule = new SwerveModule();
+    private final SwerveModule m_back_RightModule = new SwerveModule();
+
     private Pose2d m_pose = new Pose2d(5.0, 13.5, new Rotation2d());
 
-    private AnalogGyro m_gyro = new AnalogGyro(0);
+    private PigeonIMU m_gyro = new PigeonIMU(0);
 
     private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(frontLeft, frontRight, backLeft, backRight);
 
