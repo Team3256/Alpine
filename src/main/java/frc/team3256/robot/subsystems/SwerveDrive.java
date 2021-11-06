@@ -43,8 +43,8 @@ public class SwerveDrive extends SubsystemBase {
         gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
 
         // Update the pose
-        m_pose = m_odometry.update(gyroAngle, m_frontLeftModule.getState(), m_frontRightModule.getState(),
-                m_backLeftModule.getState(), m_backRightModule.getState());
+//        m_pose = m_odometry.update(gyroAngle, m_frontLeftModule.getState(), m_frontRightModule.getState(),
+//                m_backLeftModule.getState(), m_backRightModule.getState());
     }
 
     /**
