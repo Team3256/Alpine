@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import org.json.simple.*;
 import org.json.simple.parser.*;
-import static frc.team3256.robot.constants.AutoConstants.*;
+import static frc.team3256.robot.Constants.AutoConstants.*;
 
 public class JSONReader {
     /**
