@@ -15,6 +15,8 @@ public class SwerveModule {
 
     private final TalonFX m_driveMotor;
     private final TalonFX m_turningMotor;
+    private final Encoder m_driveEncoder;
+    private final Encoder m_turningEncoder;
 
 //    private final Encoder m_driveEncoder;
 //    private final Encoder m_turningEncoder;
@@ -45,6 +47,8 @@ public class SwerveModule {
         m_driveMotor = new TalonFX(driveMotorChannel);
         m_turningMotor = new TalonFX(turningMotorChannel);
 
+        m_driveEncoder = new Encoder(1,1);
+        m_turningEncoder = new Encoder(1,1);
         // Set the distance per pulse for the drive encoder. We can simply use the
         // distance traveled for one rotation of the wheel divided by the encoder
         // resolution.
@@ -92,7 +96,7 @@ public class SwerveModule {
         final double turnFeedforward =
                 m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
 
-        m_driveMotor.setVoltage(driveOutput + driveFeedforward);
-        m_turningMotor.setVoltage(turnOutput + turnFeedforward);
+//        m_driveMotor.setVoltage(driveOutput + driveFeedforward);
+//        m_turningMotor.setVoltage(turnOutput + turnFeedforward);
     }
 }

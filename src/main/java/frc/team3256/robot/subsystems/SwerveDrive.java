@@ -18,14 +18,14 @@ public class SwerveDrive extends SubsystemBase {
     private final Translation2d backLeft = new Translation2d(AutoConstants.BACK_LEFT[0], AutoConstants.BACK_LEFT[1]);
     private final Translation2d backRight = new Translation2d(AutoConstants.BACK_RIGHT[0], AutoConstants.BACK_RIGHT[1]);
 
-    private final SwerveModule m_frontLeftModule = new SwerveModule();
-    private final SwerveModule m_frontRightModule = new SwerveModule();
-    private final SwerveModule m_backLeftModule = new SwerveModule();
-    private final SwerveModule m_back_RightModule = new SwerveModule();
+//    private final SwerveModule m_frontLeftModule = new SwerveModule(0,0);
+//    private final SwerveModule m_frontRightModule = new SwerveModule(0,0);
+//    private final SwerveModule m_backLeftModule = new SwerveModule(0,0);
+//    private final SwerveModule m_back_RightModule = new SwerveModule(0,0);
 
     private Pose2d m_pose = new Pose2d(5.0, 13.5, new Rotation2d());
 
-    private PigeonIMU m_gyro = new PigeonIMU(0);
+    private AnalogGyro m_gyro = new AnalogGyro(0);
 
     private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(frontLeft, frontRight, backLeft, backRight);
 

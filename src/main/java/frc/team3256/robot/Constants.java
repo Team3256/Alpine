@@ -24,7 +24,7 @@ public final class Constants {
         public static final double kWheelRadius = 0.0508;
         public static final int kEncoderResolution = 4096;
 
-        public static final double kModuleMaxAngularVelocity = Drivetrain.kMaxAngularSpeed;
+        public static final double kModuleMaxAngularVelocity = 0;
         public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
 
     }
