@@ -18,10 +18,11 @@ public class SwerveDrive extends SubsystemBase {
     private final Translation2d backLeft = new Translation2d(AutoConstants.BACK_LEFT[0], AutoConstants.BACK_LEFT[1]);
     private final Translation2d backRight = new Translation2d(AutoConstants.BACK_RIGHT[0], AutoConstants.BACK_RIGHT[1]);
 
-//    private final SwerveModule m_frontLeftModule = new SwerveModule(0,0);
-//    private final SwerveModule m_frontRightModule = new SwerveModule(0,0);
-//    private final SwerveModule m_backLeftModule = new SwerveModule(0,0);
-//    private final SwerveModule m_back_RightModule = new SwerveModule(0,0);
+    //TODO: change CAN channels for modules
+    private final SwerveModule m_frontLeftModule = new SwerveModule(0,0);
+    private final SwerveModule m_frontRightModule = new SwerveModule(0,0);
+    private final SwerveModule m_backLeftModule = new SwerveModule(0,0);
+    private final SwerveModule m_back_RightModule = new SwerveModule(0,0);
 
     private Pose2d m_pose = new Pose2d(5.0, 13.5, new Rotation2d());
 
@@ -50,8 +51,8 @@ public class SwerveDrive extends SubsystemBase {
         gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
 
         // Update the pose
-//        m_pose = m_odometry.update(gyroAngle, m_frontLeftModule.getState(), m_frontRightModule.getState(),
-//                m_backLeftModule.getState(), m_backRightModule.getState());
+        m_pose = m_odometry.update(gyroAngle, m_frontLeftModule.getState(), m_frontRightModule.getState(),
+                m_backLeftModule.getState(), m_back_RightModule.getState());
     }
 
     /**
