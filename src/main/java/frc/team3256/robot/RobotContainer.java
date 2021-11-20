@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
+import frc.team3256.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,12 +32,13 @@ public class RobotContainer {
         // Left stick Y axis -> forward and backwards movement
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotation
-        m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-                m_drivetrainSubsystem,
-                () -> -modifyAxis(m_controller.getY(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kRight)) * SwerveDrive.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-        ));
+
+//        m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+//                m_drivetrainSubsystem,
+//                () -> -modifyAxis(m_controller.getY(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
+//                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
+//                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kRight)) * SwerveDrive.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+//        ));
 
         // Configure the button bindings
         configureButtonBindings();
@@ -50,9 +52,9 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
-        new Button(m_controller::getBackButton)
-                // No requirements because we don't need to interrupt anything
-                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
+//        new Button(m_controller::getBackButton)
+//                // No requirements because we don't need to interrupt anything
+//                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
     }
 
     /**
