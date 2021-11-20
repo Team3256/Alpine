@@ -14,7 +14,35 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+<<<<<<< HEAD
 import static frc.team3256.robot.Constants.*;
+=======
+public class SwerveDrive extends SubsystemBase {
+    private final Translation2d frontLeft = new Translation2d(AutoConstants.FRONT_LEFT[0], AutoConstants.FRONT_LEFT[1]);
+    private final Translation2d frontRight = new Translation2d(AutoConstants.FRONT_RIGHT[0], AutoConstants.FRONT_RIGHT[1]);
+    private final Translation2d backLeft = new Translation2d(AutoConstants.BACK_LEFT[0], AutoConstants.BACK_LEFT[1]);
+    private final Translation2d backRight = new Translation2d(AutoConstants.BACK_RIGHT[0], AutoConstants.BACK_RIGHT[1]);
+
+    //TODO: change CAN channels for modules
+    private final SwerveModule m_frontLeftModule = new SwerveModule(0,0);
+    private final SwerveModule m_frontRightModule = new SwerveModule(0,0);
+    private final SwerveModule m_backLeftModule = new SwerveModule(0,0);
+    private final SwerveModule m_back_RightModule = new SwerveModule(0,0);
+
+    private Pose2d m_pose = new Pose2d(5.0, 13.5, new Rotation2d());
+
+    private AnalogGyro m_gyro = new AnalogGyro(0);
+
+    private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(frontLeft, frontRight, backLeft, backRight);
+
+    private SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(m_kinematics, getGyroHeading(), m_pose);
+
+    private Rotation2d gyroAngle;
+
+    private Rotation2d getGyroHeading() {
+        return gyroAngle;
+    }
+>>>>>>> ead118d6866e08d8628cbbe455d3e06966df3f85
 
 public class SwerveDrive extends SubsystemBase {
     /**
@@ -156,8 +184,14 @@ public class SwerveDrive extends SubsystemBase {
         // FIXME Remove if you are using a Pigeon
         m_pigeon.setFusedHeading(0.0);
 
+<<<<<<< HEAD
         // FIXME Uncomment if you are using a NavX
 //    m_navx.zeroYaw();
+=======
+        // Update the pose
+        m_pose = m_odometry.update(gyroAngle, m_frontLeftModule.getState(), m_frontRightModule.getState(),
+                m_backLeftModule.getState(), m_back_RightModule.getState());
+>>>>>>> ead118d6866e08d8628cbbe455d3e06966df3f85
     }
 
     public Rotation2d getGyroscopeRotation() {

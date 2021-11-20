@@ -59,6 +59,7 @@ dependencies {
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, true)
     compile 'com.github.Team3256:warriorlib:d31221e'
+    compile 'com.github.SwerveDriveSpecialties:swerve-lib:feb950b'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

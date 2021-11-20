@@ -2,15 +2,13 @@ package frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.team3256.robot.commands.ExampleCommand;
-import frc.team3256.robot.subsystems.SwerveDrive;
-import frc.team3256.robot.commands.SwerveCommand;
-import frc.team3256.robot.helper.JoystickAnalogButton;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
-
-import static edu.wpi.first.wpilibj.GenericHID.Hand.*;
-
+import frc.team3256.robot.commands.DefaultDriveCommand;
+import frc.team3256.robot.subsystems.SwerveDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,14 +18,25 @@ import static edu.wpi.first.wpilibj.GenericHID.Hand.*;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final SwerveDrive swerveDrive = new SwerveDrive();
+    private final SwerveDrive m_drivetrainSubsystem = new SwerveDrive();
 
-    XboxController xboxController = new XboxController(0);
+    private final XboxController m_controller = new XboxController(0);
 
-
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
-        swerveDrive.setDefaultCommand(new SwerveCommand( ()->xboxController.getX(kLeft), ()->xboxController.getY(kLeft), ()->xboxController.getX(kRight), swerveDrive));
+        // Set up the default command for the drivetrain.
+        // The controls are for field-oriented driving:
+        // Left stick Y axis -> forward and backwards movement
+        // Left stick X axis -> left and right movement
+        // Right stick X axis -> rotation
+        m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+                m_drivetrainSubsystem,
+                () -> -modifyAxis(m_controller.getY(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kRight)) * SwerveDrive.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+        ));
 
         // Configure the button bindings
         configureButtonBindings();
@@ -40,9 +49,10 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        Button rightTrigger = new JoystickAnalogButton(xboxController, XboxController.Axis.kRightTrigger.value);
-        Button leftTrigger = new JoystickAnalogButton(xboxController, XboxController.Axis.kLeftTrigger.value);
-
+        // Back button zeros the gyroscope
+        new Button(m_controller::getBackButton)
+                // No requirements because we don't need to interrupt anything
+                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
     }
 
     /**
@@ -50,8 +60,30 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-//    public Command getAutonomousCommand() {
-//        // An ExampleCommand will run in autonomous
-////        return m_autoCommand;
-//    }
+    public Command getAutonomousCommand() {
+        // An ExampleCommand will run in autonomous
+        return new InstantCommand();
+    }
+
+    private static double deadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+            if (value > 0.0) {
+                return (value - deadband) / (1.0 - deadband);
+            } else {
+                return (value + deadband) / (1.0 - deadband);
+            }
+        } else {
+            return 0.0;
+        }
+    }
+
+    private static double modifyAxis(double value) {
+        // Deadband
+        value = deadband(value, 0.05);
+
+        // Square the axis
+        value = Math.copySign(value * value, value);
+
+        return value;
+    }
 }

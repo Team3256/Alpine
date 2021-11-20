@@ -23,7 +23,7 @@ public class SwerveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        swerveDrive.drive(velocityX.getAsDouble(), velocityX.getAsDouble(), angularSpeed.getAsDouble());
+//        swerveDrive.drive(velocityX.getAsDouble(), velocityX.getAsDouble(), angularSpeed.getAsDouble());
     }
 
     // never stop driving lmao
@@ -35,6 +35,6 @@ public class SwerveCommand extends CommandBase {
     // If the command ends, stop driving
     @Override
     public void end(boolean interrupted) {
-        swerveDrive.drive(0, 0, 0);
+//        swerveDrive.drive(0, 0, 0);
     }
 }
