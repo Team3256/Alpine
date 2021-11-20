@@ -1,5 +1,6 @@
 package auto.paths;
 
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import frc.team3256.robot.auto.paths.JSONReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -230,7 +231,7 @@ public class TestJSONReaderArrayList {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ArrayList<Vector<Double>> inputList = JSONReader.ParseJSONFileTester(sampleArray);
+        ArrayList<Translation2d> inputList = JSONReader.ParseJSONFileTester(sampleArray);
 
         ArrayList<Vector<Double>> compareWith = new ArrayList<Vector<Double>>();
 

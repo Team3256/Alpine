@@ -1,5 +1,9 @@
 package frc.team3256.robot;
 
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
+
 public final class Constants {
     public static class SwerveConstants {
         /**
@@ -36,6 +40,7 @@ public final class Constants {
         public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 0; // FIXME Set back right steer motor ID
         public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 0; // FIXME Set back right steer encoder ID
         public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(0.0); // FIXME Measure and set back right steer offset
+        public static SwerveDriveKinematics kDriveKinematics;
     }
     public static class AutoConstants {
         public static double MIN_SPACE_BETWEEN_POINTS = 0.5;
@@ -43,6 +48,12 @@ public final class Constants {
         public static final double[] FRONT_RIGHT = {0.5,-0.5};
         public static final double[] BACK_LEFT = {-0.5,0.5};
         public static final double[] BACK_RIGHT = {-0.5,-0.5};
+        public static double P_THETA_CONTROLLER;
+        public static double kMaxSpeedMetersPerSecond;
+        public static double kMaxAccelerationMetersPerSecondSquared;
+        public static double kPXController;
+        public static TrapezoidProfile.Constraints kThetaControllerConstraints;
+        public static double kPYController;
     }
 
     public static class CANConstants {
@@ -62,6 +73,5 @@ public final class Constants {
 
         public static final double kModuleMaxAngularVelocity = 0;
         public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
-
     }
 }
