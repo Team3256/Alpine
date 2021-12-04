@@ -3,10 +3,12 @@ package frc.team3256.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.team3256.robot.auto.AutoChooser;
 import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
 import frc.team3256.robot.Constants.*;
@@ -31,14 +33,14 @@ public class RobotContainer {
         // The controls are for field-oriented driving:
         // Left stick Y axis -> forward and backwards movement
         // Left stick X axis -> left and right movement
-        // Right stick X axis -> rotation
+        // Right stick X axis -> rotationx
 
-//        m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-//                m_drivetrainSubsystem,
-//                () -> -modifyAxis(m_controller.getY(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
-//                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
-//                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kRight)) * SwerveDrive.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-//        ));
+        m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+                m_drivetrainSubsystem,
+                () -> -modifyAxis(m_controller.getY(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kRight)) * SwerveDrive.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+        ));
 
         // Configure the button bindings
         configureButtonBindings();
@@ -56,6 +58,9 @@ public class RobotContainer {
 //                // No requirements because we don't need to interrupt anything
 //                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
     }
+    public SendableChooser<Command> getCommandChooser() {
+        return AutoChooser.getDefaultChooser(m_drivetrainSubsystem);
+    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -64,7 +69,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new InstantCommand();
+        return AutoChooser.getCommand();
     }
 
     private static double deadband(double value, double deadband) {
