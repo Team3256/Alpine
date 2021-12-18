@@ -19,21 +19,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.team3256.robot.Constants.SwerveConstants.*;
 
 public class SwerveDrive extends SubsystemBase {
-    /**
-     * The maximum voltage that will be delivered to the drive motors.
-     * <p>
-     * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
-     */
     public static final double MAX_VOLTAGE = 12.0;
+    //  An example of this constant for a Mk4 L2 module with NEOs to drive is:
 
-    /**
-     * The maximum velocity of the robot in meters per second.
-     * <p>
-     * This is a measure of how fast the robot should be able to drive in a straight line.
-     */
-    public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
-            SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
-            SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
+    public static final double MAX_VELOCITY_METERS_PER_SECOND =  5880.0 / 60.0 *
+            SdsModuleConfigurations.MK4_L2.getDriveReduction() *
+            SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
             Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
@@ -48,10 +39,8 @@ public class SwerveDrive extends SubsystemBase {
             new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
 
-    // FIXME Remove if you are using a Pigeon
+    // FIXME Remove if you are not using a Pigeon
     private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
-    // FIXME Uncomment if you are using a NavX
-    //  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
 
     // These are our modules. We initialize them in the constructor.
     private final SwerveModule frontLeftModule;
@@ -124,25 +113,13 @@ public class SwerveDrive extends SubsystemBase {
      * 'forwards' direction.
      */
     public void zeroGyroscope() {
-        // FIXME Remove if you are using a Pigeon
+        // FIXME Remove if you are not using a Pigeon
         pigeon.setFusedHeading(0.0);
-
-        // FIXME Uncomment if you are using a NavX
-//    m_navx.zeroYaw();
     }
 
     public Rotation2d getGyroscopeRotation() {
         // FIXME Remove if you are using a Pigeon
         return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
-
-        // FIXME Uncomment if you are using a NavX
-//    if (m_navx.isMagnetometerCalibrated()) {
-//      // We will only get valid fused headings if the magnetometer is calibrated
-//      return Rotation2d.fromDegrees(m_navx.getFusedHeading());
-//    }
-//
-//    // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
-//    return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
