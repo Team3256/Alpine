@@ -40,7 +40,7 @@ public class SwerveDrive extends SubsystemBase {
     );
 
     // FIXME Remove if you are not using a Pigeon
-    private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
+//    private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
 
     // These are our modules. We initialize them in the constructor.
 
@@ -115,12 +115,13 @@ public class SwerveDrive extends SubsystemBase {
      */
     public void zeroGyroscope() {
         // FIXME Remove if you are not using a Pigeon
-        pigeon.setFusedHeading(0.0);
+//        pigeon.setFusedHeading(0.0);
     }
 
     public Rotation2d getGyroscopeRotation() {
         // FIXME Remove if you are using a Pigeon
-        return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
+        return new Rotation2d();
+        // return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
