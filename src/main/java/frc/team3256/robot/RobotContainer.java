@@ -2,16 +2,12 @@ package frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team3256.robot.auto.AutoChooser;
 import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
-import frc.team3256.robot.Constants.*;
+import frc.team3256.robot.Constants.SwerveConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,9 +17,9 @@ import frc.team3256.robot.Constants.*;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final SwerveDrive m_drivetrainSubsystem = new SwerveDrive();
+    private final SwerveDrive drivetrainSubsystem = new SwerveDrive();
 
-    private final XboxController m_controller = new XboxController(0);
+    private final XboxController controller = new XboxController(0);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -35,11 +31,11 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotationx
 
-        m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-                m_drivetrainSubsystem,
-                () -> -modifyAxis(m_controller.getY(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kLeft)) * SwerveDrive.MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(m_controller.getX(GenericHID.Hand.kRight)) * SwerveDrive.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+        drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+                drivetrainSubsystem,
+                () -> -modifyAxis(controller.getY(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(controller.getX(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(controller.getX(GenericHID.Hand.kRight)) * SwerveConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
         ));
 
         // Configure the button bindings
@@ -54,12 +50,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
-//        new Button(m_controller::getBackButton)
+//        new Button(controller::getBackButton)
 //                // No requirements because we don't need to interrupt anything
-//                .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
+//                .whenPressed(drivetrainSubsystem::zeroGyroscope);
     }
     public SendableChooser<Command> getCommandChooser() {
-        return AutoChooser.getDefaultChooser(m_drivetrainSubsystem);
+        return AutoChooser.getDefaultChooser(drivetrainSubsystem);
     }
 
     /**
