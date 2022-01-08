@@ -1,9 +1,6 @@
 package frc.team3256.robot.subsystems;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
-import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -12,11 +9,9 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -57,9 +52,9 @@ public class SwerveDrive extends SubsystemBase {
         // FIXME Setup motor configuration
         frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
                 // This parameter is optional, but will allow you to see the current state of the module on the dashboard.
-                tab.getLayout("Front Left Module", BuiltInLayouts.kList)
-                        .withSize(2, 4)
-                        .withPosition(0, 0),
+//                tab.getLayout("Front Left Module", BuiltInLayouts.kList)
+//                        .withSize(2, 4)
+//                        .withPosition(0, 0),
                 // This can either be STANDARD or FAST depending on your gear configuration
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
                 FRONT_LEFT_MODULE_DRIVE_MOTOR,
@@ -69,9 +64,9 @@ public class SwerveDrive extends SubsystemBase {
         );
 
         frontRightModule = Mk3SwerveModuleHelper.createFalcon500(
-                tab.getLayout("Front Right Module", BuiltInLayouts.kList)
-                        .withSize(2, 4)
-                        .withPosition(2, 0),
+//                tab.getLayout("Front Right Module", BuiltInLayouts.kList)
+//                        .withSize(2, 4)
+//                        .withPosition(2, 0),
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
                 FRONT_RIGHT_MODULE_DRIVE_MOTOR,
                 FRONT_RIGHT_MODULE_STEER_MOTOR,
@@ -80,9 +75,9 @@ public class SwerveDrive extends SubsystemBase {
         );
 
         backLeftModule = Mk3SwerveModuleHelper.createFalcon500(
-                tab.getLayout("Back Left Module", BuiltInLayouts.kList)
-                        .withSize(2, 4)
-                        .withPosition(4, 0),
+//                tab.getLayout("Back Left Module", BuiltInLayouts.kList)
+//                        .withSize(2, 4)
+//                        .withPosition(4, 0),
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
                 BACK_LEFT_MODULE_DRIVE_MOTOR,
                 BACK_LEFT_MODULE_STEER_MOTOR,
@@ -91,9 +86,9 @@ public class SwerveDrive extends SubsystemBase {
         );
 
         backRightModule = Mk3SwerveModuleHelper.createFalcon500(
-                tab.getLayout("Back Right Module", BuiltInLayouts.kList)
-                        .withSize(2, 4)
-                        .withPosition(6, 0),
+//                tab.getLayout("Back Right Module", BuiltInLayouts.kList)
+//                        .withSize(2, 4)
+//                        .withPosition(6, 0),
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
                 BACK_RIGHT_MODULE_DRIVE_MOTOR,
                 BACK_RIGHT_MODULE_STEER_MOTOR,
@@ -138,7 +133,7 @@ public class SwerveDrive extends SubsystemBase {
         backRightModule.set(desiredStates[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[3].angle.getRadians());
     }
 
-    public void outputToDashboaord() {
+    public void outputToDashboard() {
         SmartDashboard.putData("Field", field);
 
         SmartDashboard.putNumber("Front Left Speed", frontLeftModule.getDriveVelocity());
@@ -168,6 +163,6 @@ public class SwerveDrive extends SubsystemBase {
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
         setModuleStates(states);
 
-        outputToDashboaord();
+        outputToDashboard();
     }
 }
