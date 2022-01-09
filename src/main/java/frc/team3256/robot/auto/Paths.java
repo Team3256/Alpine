@@ -11,14 +11,11 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.team3256.robot.Constants;
 import frc.team3256.robot.auto.paths.JSONReader;
-import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static frc.team3256.robot.Constants.AutoConstants.*;
@@ -30,7 +27,7 @@ public class Paths {
                         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                         Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                         // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
+                        .setKinematics(SwerveDrive.swerveDriveKinematics);
 
         List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
 
@@ -53,7 +50,7 @@ public class Paths {
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
                 trajectory1,
                 robotDrive::getPose, // Functional interface to feed supplier
-                Constants.SwerveConstants.kDriveKinematics,
+                SwerveDrive.swerveDriveKinematics,
 
                 // Position controllers
                 new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -71,7 +68,7 @@ public class Paths {
                         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                         Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                         // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
+                        .setKinematics(SwerveDrive.swerveDriveKinematics);
 
         List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
 
@@ -94,7 +91,7 @@ public class Paths {
         return new SwerveControllerCommand(
             trajectory2,
             robotDrive::getPose, // Functional interface to feed supplier
-            Constants.SwerveConstants.kDriveKinematics,
+            SwerveDrive.swerveDriveKinematics,
 
             // Position controllers
             new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -110,7 +107,7 @@ public class Paths {
                         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                         Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                         // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
+                        .setKinematics(SwerveDrive.swerveDriveKinematics);
 
         List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
 
@@ -133,7 +130,7 @@ public class Paths {
         return new SwerveControllerCommand(
             trajectory3,
             robotDrive::getPose, // Functional interface to feed supplier
-            Constants.SwerveConstants.kDriveKinematics,
+            SwerveDrive.swerveDriveKinematics,
 
             // Position controllers
             new PIDController(Constants.AutoConstants.kPXController, 0, 0),

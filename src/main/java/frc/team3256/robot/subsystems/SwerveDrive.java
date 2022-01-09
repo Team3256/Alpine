@@ -21,8 +21,6 @@ import static frc.team3256.robot.Constants.IDConstants.*;
 import static frc.team3256.robot.Constants.SwerveConstants.*;
 
 public class SwerveDrive extends SubsystemBase {
-    public static final double MAX_VOLTAGE = 12.0;
-
 
 
 
@@ -37,6 +35,7 @@ public class SwerveDrive extends SubsystemBase {
             new Translation2d(-DRIVETRAIN_TRACK_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
     private final Field2d field = new Field2d();
+
     private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
 
     private final SwerveModule frontLeftModule;
@@ -46,12 +45,13 @@ public class SwerveDrive extends SubsystemBase {
 
     private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
     private Pose2d pose = new Pose2d(0, 0, new Rotation2d(0));
-    private SwerveDriveOdometry odometry = new SwerveDriveOdometry(kinematics, getGyroscopeRotation(), pose);
+    private final SwerveDriveOdometry odometry = new SwerveDriveOdometry(kinematics, getGyroscopeRotation(), pose);
+
+    public static SwerveDriveKinematics swerveDriveKinematics;
 
     public SwerveDrive() {
         ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
-        // FIXME Setup motor configuration
         frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
                 // This parameter is optional, but will allow you to see the current state of the module on the dashboard.
                 tab.getLayout("Front Left Module", BuiltInLayouts.kList)
