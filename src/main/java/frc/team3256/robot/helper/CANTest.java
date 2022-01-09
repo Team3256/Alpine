@@ -5,9 +5,8 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import static frc.team3256.robot.Constants.CANConstants.*;
-import static frc.team3256.robot.Constants.IDConstants.*;
 
+import static frc.team3256.robot.Constants.IDConstants.*;
 
 /**
  * A Class to test if CAN devices are online
@@ -19,8 +18,8 @@ public class CANTest {
      * Main method to test all CAN devices except PCM.
      */
     public static void test() {
-        boolean noErrors = testTalonFX(TalonFXIDs) &&
-                testSparkMax(SparkMaxIDs) &&
+        boolean noErrors = testTalonFX() &&
+                testSparkMax() &&
                 testPDP() &&
                 testPigeon();
 
@@ -49,13 +48,11 @@ public class CANTest {
     /**
      * Helper method to test multiple TalonFX motors
      *
-     * @param ids motor IDs to test
-     *
      * @return Returns whether all the TalonFXs are online
      */
-    private static boolean testTalonFX(int[] ids) {
+    private static boolean testTalonFX() {
         boolean isGood = true;
-        for (int id : ids) {
+        for (int id : TALON_FX_IDS) {
             TalonFX talon = new TalonFX(id);
             double temp = talon.getTemperature();
             if (temp == 0) {
@@ -72,7 +69,7 @@ public class CANTest {
      * @return Returns whether the Pigeon is online
      */
     private static boolean testPigeon() {
-        PigeonIMU pigeon = new PigeonIMU(pigeonID);
+        PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
         double temp = pigeon.getTemp();
         if (temp == 0) {
             System.out.println("Pigeon is Offline");
@@ -82,13 +79,11 @@ public class CANTest {
     }
 
     /**
-     * @param ids motor IDs to test
-     *
      * @return Returns whether all the SparkMaxes are online
      */
-    private static boolean testSparkMax(int[] ids) {
+    private static boolean testSparkMax() {
         boolean isGood = true;
-        for (int id : ids) {
+        for (int id : SPARK_MAX_IDS) {
             CANSparkMax sparkMax = new CANSparkMax(id, CANSparkMaxLowLevel.MotorType.fromId(0));
             double temp = sparkMax.getMotorTemperature();
             if (temp == 0) {

@@ -1,7 +1,6 @@
 package frc.team3256.robot;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 
 public final class Constants {
@@ -39,12 +38,10 @@ public final class Constants {
         public static double kPYController;
     }
 
-    public static class CANConstants {
-        public static final int[] SparkMaxIDs = new int[]{};
-        public static final int[] TalonFXIDs = new int[]{};
-    }
-
     public static class IDConstants {
+        public static final int[] TALON_FX_IDS = new int[]{5,6,8,9,11,12,14,15};
+        public static final int[] SPARK_MAX_IDS = new int[]{};
+
         public static final int DRIVETRAIN_PIGEON_ID = 4;
 
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR_ID = 5;
