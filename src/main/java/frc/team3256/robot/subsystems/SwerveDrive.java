@@ -1,9 +1,7 @@
 package frc.team3256.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
-import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -16,10 +14,10 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static frc.team3256.robot.Constants.IDConstants.*;
 import static frc.team3256.robot.Constants.SwerveConstants.*;
 
 public class SwerveDrive extends SubsystemBase {
@@ -61,9 +59,9 @@ public class SwerveDrive extends SubsystemBase {
                         .withPosition(0, 0),
                 // This can either be STANDARD or FAST depending on your gear configuration
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
-                FRONT_LEFT_MODULE_DRIVE_MOTOR,
-                FRONT_LEFT_MODULE_STEER_MOTOR,
-                FRONT_LEFT_MODULE_STEER_ENCODER,
+                FRONT_LEFT_MODULE_DRIVE_MOTOR_ID,
+                FRONT_LEFT_MODULE_STEER_MOTOR_ID,
+                FRONT_LEFT_MODULE_STEER_ENCODER_ID,
                 FRONT_LEFT_MODULE_STEER_OFFSET
         );
 
@@ -72,9 +70,9 @@ public class SwerveDrive extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(2, 0),
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
-                FRONT_RIGHT_MODULE_DRIVE_MOTOR,
-                FRONT_RIGHT_MODULE_STEER_MOTOR,
-                FRONT_RIGHT_MODULE_STEER_ENCODER,
+                FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID,
+                FRONT_RIGHT_MODULE_STEER_MOTOR_ID,
+                FRONT_RIGHT_MODULE_STEER_ENCODER_ID,
                 FRONT_RIGHT_MODULE_STEER_OFFSET
         );
 
@@ -83,9 +81,9 @@ public class SwerveDrive extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(4, 0),
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
-                BACK_LEFT_MODULE_DRIVE_MOTOR,
-                BACK_LEFT_MODULE_STEER_MOTOR,
-                BACK_LEFT_MODULE_STEER_ENCODER,
+                BACK_LEFT_MODULE_DRIVE_MOTOR_ID,
+                BACK_LEFT_MODULE_STEER_MOTOR_ID,
+                BACK_LEFT_MODULE_STEER_ENCODER_ID,
                 BACK_LEFT_MODULE_STEER_OFFSET
         );
 
@@ -94,9 +92,9 @@ public class SwerveDrive extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(6, 0),
                 Mk3SwerveModuleHelper.GearRatio.STANDARD,
-                BACK_RIGHT_MODULE_DRIVE_MOTOR,
-                BACK_RIGHT_MODULE_STEER_MOTOR,
-                BACK_RIGHT_MODULE_STEER_ENCODER,
+                BACK_RIGHT_MODULE_DRIVE_MOTOR_ID,
+                BACK_RIGHT_MODULE_STEER_MOTOR_ID,
+                BACK_RIGHT_MODULE_STEER_ENCODER_ID,
                 BACK_RIGHT_MODULE_STEER_OFFSET
         );
         SmartDashboard.putData("Field", field);
