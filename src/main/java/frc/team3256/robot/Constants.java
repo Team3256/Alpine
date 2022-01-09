@@ -15,27 +15,30 @@ public final class Constants {
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 5;
         public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 6;
         public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 7;
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = Math.toRadians(186.0);
+        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(168.8379); //357
 
         public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 8;
         public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 9;
         public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 10;
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = Math.toRadians(230.0); // pos clockwise
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(233.1738); //179
 
         public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 11;
         public static final int BACK_LEFT_MODULE_STEER_MOTOR = 12;
         public static final int BACK_LEFT_MODULE_STEER_ENCODER = 13;
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = Math.toRadians(3.0);
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(349.8926);
 
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 14;
         public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 15;
         public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 16;
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = Math.toRadians(53.0);
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(52.8223); //179
 
         public static final double MAX_METERS_PER_SECOND = 10;
-        public static final double MAX_VELOCITY_METERS_PER_SECOND =  6380.0 / 60.0 *
-                SdsModuleConfigurations.MK4_L2.getDriveReduction() *
-                SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 3380.0 / 60.0 *
+         SdsModuleConfigurations.MK4_L2.getDriveReduction() *
+         SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
+            // 6380.0 / 60.0 *
+                // SdsModuleConfigurations.MK4_L2.getDriveReduction() *
+                // SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
 
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
                 Math.hypot(DRIVETRAIN_TRACK_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);

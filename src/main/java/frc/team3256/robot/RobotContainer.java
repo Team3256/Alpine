@@ -22,6 +22,7 @@ public class RobotContainer {
     private final XboxController controller = new XboxController(0);
 
     /**
+     *
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
@@ -31,9 +32,9 @@ public class RobotContainer {
         // Left stick X axis -> left and right movement
         // Right stick X axis -> rotationx
 
-        drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+       drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
                 drivetrainSubsystem,
-                () -> -0.1 * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND, //-modifyAxis(controller.getY(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND
+                () -> -modifyAxis(controller.getY(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(controller.getX(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(controller.getX(GenericHID.Hand.kRight)) * SwerveConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
         ));

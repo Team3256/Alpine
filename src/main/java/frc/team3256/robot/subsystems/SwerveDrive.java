@@ -39,8 +39,7 @@ public class SwerveDrive extends SubsystemBase {
             new Translation2d(-DRIVETRAIN_TRACK_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
     private final Field2d field = new Field2d();
-    // FIXME Remove if you are not using a Pigeon
-//    private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
+    private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
 
     private final SwerveModule frontLeftModule;
     private final SwerveModule frontRightModule;
@@ -108,14 +107,11 @@ public class SwerveDrive extends SubsystemBase {
      * 'forwards' direction.
      */
     public void zeroGyroscope() {
-        // FIXME Remove if you are not using a Pigeon
-//        pigeon.setFusedHeading(0.0);
+        pigeon.setFusedHeading(0.0);
     }
 
     public Rotation2d getGyroscopeRotation() {
-        // FIXME Remove if you are using a Pigeon
-        return new Rotation2d();
-        // return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
+        return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
@@ -141,6 +137,7 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("Desired Front Right Angle", desiredStates[1].angle.getDegrees());
         SmartDashboard.putNumber("Desired Back Left Angle", desiredStates[2].angle.getDegrees());
         SmartDashboard.putNumber("Desired Back Right Angle", desiredStates[3].angle.getDegrees());
+
 
         frontLeftModule.set(desiredStates[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[0].angle.getRadians());
         frontRightModule.set(desiredStates[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[1].angle.getRadians());
