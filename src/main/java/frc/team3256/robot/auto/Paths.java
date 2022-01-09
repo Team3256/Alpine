@@ -1,6 +1,5 @@
 package frc.team3256.robot.auto;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -11,6 +10,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.team3256.robot.Constants;
@@ -24,7 +24,7 @@ import java.util.List;
 import static frc.team3256.robot.Constants.AutoConstants.*;
 
 public class Paths {
-    public static SwerveControllerCommand getTrajectory1(SwerveDrive robotDrive) {
+    public static Command getTrajectory1(SwerveDrive robotDrive) {
         TrajectoryConfig config =
                 new TrajectoryConfig(
                         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -49,6 +49,7 @@ public class Paths {
                 new ProfiledPIDController(
                         P_THETA_CONTROLLER, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
                 trajectory1,
                 robotDrive::getPose, // Functional interface to feed supplier
@@ -61,7 +62,7 @@ public class Paths {
                 robotDrive::setModuleStates,
                 robotDrive);
 
-        return swerveControllerCommand;
+        return swerveControllerCommand.andThen(() -> robotDrive.drive(new ChassisSpeeds()));
     }
 
     public static SwerveControllerCommand getTrajectory2(SwerveDrive robotDrive) {

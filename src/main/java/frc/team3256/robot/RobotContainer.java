@@ -33,7 +33,7 @@ public class RobotContainer {
 
         drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
                 drivetrainSubsystem,
-                () -> -modifyAxis(controller.getY(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -0.1 * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND, //-modifyAxis(controller.getY(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND
                 () -> -modifyAxis(controller.getX(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(controller.getX(GenericHID.Hand.kRight)) * SwerveConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
         ));
@@ -64,7 +64,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
         return AutoChooser.getCommand();
     }
 
