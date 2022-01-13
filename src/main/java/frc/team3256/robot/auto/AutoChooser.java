@@ -12,10 +12,10 @@ public class AutoChooser {
 
     public static SendableChooser<Command> getDefaultChooser(SwerveDrive drive) {
         autoChooser = new SendableChooser<>();
-//
-//        Command trajectory1 = Paths.getTrajectory1(drive);
-//        autoChooser.addOption("Traj 1", trajectory1);
-//
+
+        Command trajectory1 = Paths.getTrajectory1(drive);
+        autoChooser.addOption("Traj 1", trajectory1);
+
 //        Command trajectory2 = Paths.getTrajectory2(drive);
 //        autoChooser.addOption("Traj 2", trajectory2);
 //

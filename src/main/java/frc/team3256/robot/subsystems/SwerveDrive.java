@@ -19,16 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.Math;
 
 import static frc.team3256.robot.Constants.SwerveConstants.*;
 
 public class SwerveDrive extends SubsystemBase {
     public static final double MAX_VOLTAGE = 12.0;
-
-
-
-
-    private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
+    private static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             // Front left
             new Translation2d(DRIVETRAIN_TRACK_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
             // Front right
@@ -110,8 +107,12 @@ public class SwerveDrive extends SubsystemBase {
         pigeon.setFusedHeading(0.0);
     }
 
+    public SwerveDriveKinematics getKinematics() {
+        return kinematics;
+    }
+
     public Rotation2d getGyroscopeRotation() {
-        return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
+        return Rotation2d.fromDegrees(pigeon.getFusedHeading());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
@@ -157,6 +158,9 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("Front Right Angle", frontRightModule.getSteerAngle());
         SmartDashboard.putNumber("Back Left Angle", backLeftModule.getSteerAngle());
         SmartDashboard.putNumber("Back Right Angle", backRightModule.getSteerAngle());
+        short[] r = new short[3];
+        pigeon.getBiasedAccelerometer(r);
+        SmartDashboard.putNumber("Gyro Acceleration", r[2]);
     }
 
     @Override
@@ -171,6 +175,7 @@ public class SwerveDrive extends SubsystemBase {
         pose = odometry.update(gyroAngle, frontLeftState, frontRightState,
                 backLeftState, backRightState);
         field.setRobotPose(pose);
+
 
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
         setModuleStates(states);

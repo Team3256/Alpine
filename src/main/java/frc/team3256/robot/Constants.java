@@ -33,7 +33,7 @@ public final class Constants {
         public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(52.8223); //179
 
         public static final double MAX_METERS_PER_SECOND = 10;
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 3380.0 / 60.0 *
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 1380.0 / 60.0 *
          SdsModuleConfigurations.MK4_L2.getDriveReduction() *
          SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
             // 6380.0 / 60.0 *
@@ -42,8 +42,6 @@ public final class Constants {
 
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
                 Math.hypot(DRIVETRAIN_TRACK_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
-
-        public static SwerveDriveKinematics kDriveKinematics;
     }
     public static class AutoConstants {
         public static double MIN_SPACE_BETWEEN_POINTS = 0.5;

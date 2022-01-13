@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team3256.robot.auto.AutoChooser;
 import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
@@ -51,9 +52,9 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
-//        new Button(controller::getBackButton)
-//                // No requirements because we don't need to interrupt anything
-//                .whenPressed(drivetrainSubsystem::zeroGyroscope);
+        new Button(controller::getAButton)
+                // No requirements because we don't need to interrupt anything
+                .whenPressed(drivetrainSubsystem::zeroGyroscope);
     }
     public SendableChooser<Command> getCommandChooser() {
         return AutoChooser.getDefaultChooser(drivetrainSubsystem);

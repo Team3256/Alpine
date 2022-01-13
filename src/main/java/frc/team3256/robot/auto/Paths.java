@@ -30,9 +30,9 @@ public class Paths {
                         Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                         Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                         // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
+                        .setKinematics(robotDrive.getKinematics());
 
-        List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
+        List<Translation2d> waypoints = List.of(new Translation2d(Units.inchesToMeters(12), 0)); // JSONReader.ParseJSONFile("");
 
         // An example trajectory to follow.  All units in meters.
         Trajectory trajectory1 =
@@ -40,9 +40,8 @@ public class Paths {
                         // Start at the origin facing the +X direction
                         new Pose2d(0, 0, new Rotation2d(0)),
                         // Pass through these two interior waypoints, making an 's' curve path
-                        waypoints,
-                        // End 200 inches straight ahead of where we started, facing forward
-                        new Pose2d(Units.inchesToMeters(200), 0, new Rotation2d(0)),
+                        List.of(new Translation2d(Units.inchesToMeters(12), 0)),                        // End 200 inches straight ahead of where we started, facing forward
+                        new Pose2d(Units.inchesToMeters(24), 0, new Rotation2d(0)),
                         config);
 
         var thetaController =
@@ -53,7 +52,7 @@ public class Paths {
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
                 trajectory1,
                 robotDrive::getPose, // Functional interface to feed supplier
-                Constants.SwerveConstants.kDriveKinematics,
+                robotDrive.getKinematics(),
 
                 // Position controllers
                 new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -65,81 +64,81 @@ public class Paths {
         return swerveControllerCommand.andThen(() -> robotDrive.drive(new ChassisSpeeds()));
     }
 
-    public static SwerveControllerCommand getTrajectory2(SwerveDrive robotDrive) {
-        TrajectoryConfig config =
-                new TrajectoryConfig(
-                        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                        // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
-
-        List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
-
-        // An example trajectory to follow.  All units in meters.
-        Trajectory trajectory2 =
-                TrajectoryGenerator.generateTrajectory(
-                        // Start at the origin facing the +X direction
-                        new Pose2d(0, 0, new Rotation2d(0)),
-                        // Pass through these two interior waypoints, making an 's' curve path
-                        waypoints,
-                        // End 200 inches straight ahead of where we started, facing forward
-                        new Pose2d(Units.inchesToMeters(200), 0, new Rotation2d(0)),
-                        config);
-
-        var thetaController =
-                new ProfiledPIDController(
-                        P_THETA_CONTROLLER, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
-        thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-        return new SwerveControllerCommand(
-            trajectory2,
-            robotDrive::getPose, // Functional interface to feed supplier
-            Constants.SwerveConstants.kDriveKinematics,
-
-            // Position controllers
-            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-            thetaController,
-            robotDrive::setModuleStates,
-            robotDrive);
-    }
-
-    public static SwerveControllerCommand getTrajectory3(SwerveDrive robotDrive) {
-        TrajectoryConfig config =
-                new TrajectoryConfig(
-                        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                        // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
-
-        List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
-
-        // An example trajectory to follow.  All units in meters.
-        Trajectory trajectory3 =
-                TrajectoryGenerator.generateTrajectory(
-                        // Start at the origin facing the +X direction
-                        new Pose2d(0, 0, new Rotation2d(0)),
-                        // Pass through these two interior waypoints, making an 's' curve path
-                        waypoints,
-                        // End 200 inches straight ahead of where we started, facing forward
-                        new Pose2d(Units.inchesToMeters(200), 0, new Rotation2d(0)),
-                        config);
-
-        var thetaController =
-                new ProfiledPIDController(
-                        P_THETA_CONTROLLER, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
-        thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-        return new SwerveControllerCommand(
-            trajectory3,
-            robotDrive::getPose, // Functional interface to feed supplier
-            Constants.SwerveConstants.kDriveKinematics,
-
-            // Position controllers
-            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-            thetaController,
-            robotDrive::setModuleStates,
-            robotDrive);
-    }
+//    public static SwerveControllerCommand getTrajectory2(SwerveDrive robotDrive) {
+//        TrajectoryConfig config =
+//                new TrajectoryConfig(
+//                        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
+//                        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+//                        // Add kinematics to ensure max speed is actually obeyed
+//                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
+//
+//        List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
+//
+//        // An example trajectory to follow.  All units in meters.
+//        Trajectory trajectory2 =
+//                TrajectoryGenerator.generateTrajectory(
+//                        // Start at the origin facing the +X direction
+//                        new Pose2d(0, 0, new Rotation2d(0)),
+//                        // Pass through these two interior waypoints, making an 's' curve path
+//                        waypoints,
+//                        // End 200 inches straight ahead of where we started, facing forward
+//                        new Pose2d(Units.inchesToMeters(200), 0, new Rotation2d(0)),
+//                        config);
+//
+//        var thetaController =
+//                new ProfiledPIDController(
+//                        P_THETA_CONTROLLER, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+//        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+//
+//        return new SwerveControllerCommand(
+//            trajectory2,
+//            robotDrive::getPose, // Functional interface to feed supplier
+//            Constants.SwerveConstants.kDriveKinematics,
+//
+//            // Position controllers
+//            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+//            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+//            thetaController,
+//            robotDrive::setModuleStates,
+//            robotDrive);
+//    }
+//
+//    public static SwerveControllerCommand getTrajectory3(SwerveDrive robotDrive) {
+//        TrajectoryConfig config =
+//                new TrajectoryConfig(
+//                        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
+//                        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+//                        // Add kinematics to ensure max speed is actually obeyed
+//                        .setKinematics(Constants.SwerveConstants.kDriveKinematics);
+//
+//        List<Translation2d> waypoints = JSONReader.ParseJSONFile("");
+//
+//        // An example trajectory to follow.  All units in meters.
+//        Trajectory trajectory3 =
+//                TrajectoryGenerator.generateTrajectory(
+//                        // Start at the origin facing the +X direction
+//                        new Pose2d(0, 0, new Rotation2d(0)),
+//                        // Pass through these two interior waypoints, making an 's' curve path
+//                        waypoints,
+//                        // End 200 inches straight ahead of where we started, facing forward
+//                        new Pose2d(Units.inchesToMeters(200), 0, new Rotation2d(0)),
+//                        config);
+//
+//        var thetaController =
+//                new ProfiledPIDController(
+//                        P_THETA_CONTROLLER, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+//        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+//
+//        return new SwerveControllerCommand(
+//            trajectory3,
+//            robotDrive::getPose, // Functional interface to feed supplier
+//            Constants.SwerveConstants.kDriveKinematics,
+//
+//            // Position controllers
+//            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+//            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+//            thetaController,
+//            robotDrive::setModuleStates,
+//            robotDrive);
+//    }
 }
