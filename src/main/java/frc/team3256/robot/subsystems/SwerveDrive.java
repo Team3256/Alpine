@@ -109,7 +109,7 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public Rotation2d getGyroscopeRotation() {
-        return Rotation2d.fromDegrees(-pigeon.getFusedHeading());
+        return Rotation2d.fromDegrees(pigeon.getFusedHeading());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
