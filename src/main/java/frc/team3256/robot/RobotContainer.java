@@ -2,6 +2,7 @@ package frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
@@ -67,6 +68,9 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return AutoChooser.getCommand();
+    }
+    public void resetPose() {
+        drivetrainSubsystem.resetOdometry(new Pose2d());
     }
 
     private static double deadband(double value, double deadband) {

@@ -111,6 +111,10 @@ public class SwerveDrive extends SubsystemBase {
         return kinematics;
     }
 
+    public void resetOdometry(Pose2d pose) {
+        odometry.resetPosition(pose, getGyroscopeRotation());
+    }
+
     public Rotation2d getGyroscopeRotation() {
         return Rotation2d.fromDegrees(pigeon.getFusedHeading());
     }
