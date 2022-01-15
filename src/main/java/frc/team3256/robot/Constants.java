@@ -50,17 +50,17 @@ public final class Constants {
         public static final double[] BACK_LEFT = {-0.5,0.5};
         public static final double[] BACK_RIGHT = {-0.5,-0.5};
 
-        public static double kMaxSpeedMetersPerSecond = 1;
-        public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
-        public static TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(0,0);
+        public static double MAX_SPEED_CONTROLLER_METERS_PER_SECOND = 1;
+        public static double MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQURARED = 0.5;
+        public static TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(0,0);
 
-        public static double kPXController = 0.01;
-        public static double kIXController = 0.01;
-        public static double kDXController = 0.01;
+        public static double P_X_CONTROLLER = 0.01;
+        public static double I_X_CONTROLLER = 0.01;
+        public static double D_X_CONTROLLER = 0.01;
 
-        public static double kPYController = 0.1;
-        public static double kIYController = 0.1;
-        public static double kDYController = 0.1;
+        public static double P_Y_CONTROLLER = 0.1;
+        public static double I_Y_CONTROLLER = 0.1;
+        public static double D_Y_CONTROLLER = 0.1;
 
         public static double P_THETA_CONTROLLER = 1;
         public static double I_THETA_CONTROLLER = 1;

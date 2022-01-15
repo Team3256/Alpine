@@ -11,14 +11,10 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.team3256.robot.Constants;
-import frc.team3256.robot.auto.paths.JSONReader;
-import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static frc.team3256.robot.Constants.AutoConstants.*;
@@ -27,8 +23,8 @@ public class Paths {
     public static Command getTrajectory1(SwerveDrive robotDrive) {
         TrajectoryConfig config =
                 new TrajectoryConfig(
-                        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                        Constants.AutoConstants.MAX_SPEED_CONTROLLER_METERS_PER_SECOND,
+                        Constants.AutoConstants.MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQURARED)
                         // Add kinematics to ensure max speed is actually obeyed
                         .setKinematics(robotDrive.getKinematics());
 
@@ -46,7 +42,7 @@ public class Paths {
 
         var thetaController =
                 new ProfiledPIDController(
-                        P_THETA_CONTROLLER, I_THETA_CONTROLLER, D_THETA_CONTROLLER, Constants.AutoConstants.kThetaControllerConstraints);
+                        P_THETA_CONTROLLER, I_THETA_CONTROLLER, D_THETA_CONTROLLER, Constants.AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
@@ -55,8 +51,8 @@ public class Paths {
                 robotDrive.getKinematics(),
 
                 // Position controllers
-                new PIDController(kPXController, kIXController, kDXController),
-                new PIDController(kPYController, kIYController, kDYController),
+                new PIDController(P_X_CONTROLLER, I_X_CONTROLLER, D_X_CONTROLLER),
+                new PIDController(P_Y_CONTROLLER, I_Y_CONTROLLER, D_Y_CONTROLLER),
                 thetaController,
                 robotDrive::setModuleStates,
                 robotDrive);
