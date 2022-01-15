@@ -6,7 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
-import static frc.team3256.robot.Constants.IDConstants.*;
+import static frc.team3256.robot.Constants.CANConstants.*;
 
 /**
  * A Class to test if CAN devices are online
@@ -52,7 +52,7 @@ public class CANTest {
      */
     private static boolean testTalonFX() {
         boolean isGood = true;
-        for (int id : TALON_FX_IDS) {
+        for (int id : TalonFXIDs) {
             TalonFX talon = new TalonFX(id);
             double temp = talon.getTemperature();
             if (temp == 0) {
@@ -69,7 +69,7 @@ public class CANTest {
      * @return Returns whether the Pigeon is online
      */
     private static boolean testPigeon() {
-        PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
+        PigeonIMU pigeon = new PigeonIMU(pigeonID);
         double temp = pigeon.getTemp();
         if (temp == 0) {
             System.out.println("Pigeon is Offline");
@@ -83,7 +83,7 @@ public class CANTest {
      */
     private static boolean testSparkMax() {
         boolean isGood = true;
-        for (int id : SPARK_MAX_IDS) {
+        for (int id : SparkMaxIDs) {
             CANSparkMax sparkMax = new CANSparkMax(id, CANSparkMaxLowLevel.MotorType.fromId(0));
             double temp = sparkMax.getMotorTemperature();
             if (temp == 0) {
