@@ -49,12 +49,23 @@ public final class Constants {
         public static final double[] FRONT_RIGHT = {0.5,-0.5};
         public static final double[] BACK_LEFT = {-0.5,0.5};
         public static final double[] BACK_RIGHT = {-0.5,-0.5};
+
+        public static double kMaxSpeedMetersPerSecond = 1;
+        public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
+        public static TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(0,0);
+
+        public static double kPXController = 0.01;
+        public static double kIXController = 0.01;
+        public static double kDXController = 0.01;
+
+        public static double kPYController = 0.1;
+        public static double kIYController = 0.1;
+        public static double kDYController = 0.1;
+
         public static double P_THETA_CONTROLLER = 1;
-        public static double kMaxSpeedMetersPerSecond = 0.5;
-        public static double kMaxAccelerationMetersPerSecondSquared = 0.1;
-        public static double kPXController = 1;
-        public static TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(0.5,0.1);
-        public static double kPYController = 1;
+        public static double I_THETA_CONTROLLER = 1;
+        public static double D_THETA_CONTROLLER = 1;
+
     }
 
     public static class CANConstants {

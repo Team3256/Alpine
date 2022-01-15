@@ -40,23 +40,23 @@ public class Paths {
                         // Start at the origin facing the +X direction
                         new Pose2d(0, 0, new Rotation2d(0)),
                         // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(Units.inchesToMeters(12), 0)),                        // End 200 inches straight ahead of where we started, facing forward
-                        new Pose2d(Units.inchesToMeters(24), 0, new Rotation2d(0)),
+                        List.of(new Translation2d(Units.inchesToMeters(5), 0)),                        // End 200 inches straight ahead of where we started, facing forward
+                        new Pose2d(Units.inchesToMeters(20), 0, new Rotation2d(Units.degreesToRadians(0))),
                         config);
 
         var thetaController =
                 new ProfiledPIDController(
-                        P_THETA_CONTROLLER, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+                        P_THETA_CONTROLLER, I_THETA_CONTROLLER, D_THETA_CONTROLLER, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
                 trajectory1,
-                robotDrive::getPose, // Functional interface to feed supplier
+                robotDrive::getPose, // Functional interface to feed supplie
                 robotDrive.getKinematics(),
 
                 // Position controllers
-                new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                new PIDController(kPXController, kIXController, kDXController),
+                new PIDController(kPYController, kIYController, kDYController),
                 thetaController,
                 robotDrive::setModuleStates,
                 robotDrive);
