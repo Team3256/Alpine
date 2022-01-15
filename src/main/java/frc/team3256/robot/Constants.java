@@ -51,7 +51,7 @@ public final class Constants {
         public static final double[] BACK_RIGHT = {-0.5,-0.5};
 
         public static double MAX_SPEED_CONTROLLER_METERS_PER_SECOND = 1;
-        public static double MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQURARED = 0.5;
+        public static double MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQUARED = 0.5;
         public static TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(0,0);
 
         public static double P_X_CONTROLLER = 0.01;

@@ -24,7 +24,7 @@ public class Paths {
         TrajectoryConfig config =
                 new TrajectoryConfig(
                         Constants.AutoConstants.MAX_SPEED_CONTROLLER_METERS_PER_SECOND,
-                        Constants.AutoConstants.MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQURARED)
+                        Constants.AutoConstants.MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQUARED)
                         // Add kinematics to ensure max speed is actually obeyed
                         .setKinematics(robotDrive.getKinematics());
 
