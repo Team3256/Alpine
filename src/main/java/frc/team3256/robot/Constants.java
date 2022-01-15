@@ -60,6 +60,7 @@ public final class Constants {
     public static class CANConstants {
         public static final int[] SparkMaxIDs = new int[]{};
         public static final int[] TalonFXIDs = new int[]{};
+        public static final int pigeonID = SwerveConstants.DRIVETRAIN_PIGEON_ID;
     }
 
     public static class IDConstants {
