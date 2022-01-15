@@ -5,13 +5,19 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.team3256.robot.commands.DefaultDriveCommand;
 import frc.team3256.robot.subsystems.SwerveDrive;
+
+import java.util.function.DoubleSupplier;
 
 public class AutoChooser {
     private static SendableChooser<Command> autoChooser;
 
     public static SendableChooser<Command> getDefaultChooser(SwerveDrive drive) {
         autoChooser = new SendableChooser<>();
+
+        Command doNothing = new DefaultDriveCommand(drive); // dont move
+        autoChooser.setDefaultOption("Do Nothing LMAO ;)) yay", doNothing);
 
         Command trajectory1 = Paths.getTrajectory1(drive);
         autoChooser.addOption("Traj 1", trajectory1);

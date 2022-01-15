@@ -139,11 +139,15 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("Desired Back Left Angle", desiredStates[2].angle.getDegrees());
         SmartDashboard.putNumber("Desired Back Right Angle", desiredStates[3].angle.getDegrees());
 
+        SwerveModuleState frontLeftOptimized = optimizeModuleState(desiredStates[0], frontLeftModule.getSteerAngle());
+        SwerveModuleState frontRightOptimzed = optimizeModuleState(desiredStates[1], frontRightModule.getSteerAngle());
+        SwerveModuleState backLeftOptimzed = optimizeModuleState(desiredStates[2], backLeftModule.getSteerAngle());
+        SwerveModuleState backRightOptimized = optimizeModuleState(desiredStates[3], backRightModule.getSteerAngle());
 
-        frontLeftModule.set(desiredStates[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[0].angle.getRadians());
-        frontRightModule.set(desiredStates[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[1].angle.getRadians());
-        backLeftModule.set(desiredStates[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[2].angle.getRadians());
-        backRightModule.set(desiredStates[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[3].angle.getRadians());
+        frontLeftModule.set(frontLeftOptimized.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, frontLeftOptimized.angle.getRadians());
+        frontRightModule.set(frontRightOptimzed.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, frontRightOptimzed.angle.getRadians());
+        backLeftModule.set(backLeftOptimzed.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, backLeftOptimzed.angle.getRadians());
+        backRightModule.set(backRightOptimized.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, backRightOptimized.angle.getRadians());
     }
 
     public void outputToDashboard() {
@@ -161,6 +165,10 @@ public class SwerveDrive extends SubsystemBase {
         short[] r = new short[3];
         pigeon.getBiasedAccelerometer(r);
         SmartDashboard.putNumber("Gyro Acceleration", r[2]);
+    }
+
+    public SwerveModuleState optimizeModuleState(SwerveModuleState state, double heading) {
+        return SwerveModuleState.optimize(state, new Rotation2d(heading));
     }
 
     @Override

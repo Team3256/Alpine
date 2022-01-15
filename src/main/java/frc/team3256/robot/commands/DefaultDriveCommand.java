@@ -25,6 +25,15 @@ public class DefaultDriveCommand extends CommandBase {
         addRequirements(drivetrainSubsystem);
     }
 
+    public DefaultDriveCommand(SwerveDrive drivetrainSubsystem) { // constructor that sets values to 0
+        this.drivetrainSubsystem = drivetrainSubsystem;
+        this.translationXSupplier = () -> 0;
+        this.translationYSupplier = () -> 0;
+        this.rotationSupplier = () -> 0;
+
+        addRequirements(drivetrainSubsystem);
+    }
+
     @Override
     public void execute() {
         // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
