@@ -16,10 +16,8 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import java.lang.Math;
 
 import static frc.team3256.robot.Constants.SwerveConstants.*;
 
@@ -140,13 +138,13 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("Desired Back Right Angle", desiredStates[3].angle.getDegrees());
 
         SwerveModuleState frontLeftOptimized = optimizeModuleState(desiredStates[0], frontLeftModule.getSteerAngle());
-        SwerveModuleState frontRightOptimzed = optimizeModuleState(desiredStates[1], frontRightModule.getSteerAngle());
-        SwerveModuleState backLeftOptimzed = optimizeModuleState(desiredStates[2], backLeftModule.getSteerAngle());
+        SwerveModuleState frontRightOptimized = optimizeModuleState(desiredStates[1], frontRightModule.getSteerAngle());
+        SwerveModuleState backLeftOptimized = optimizeModuleState(desiredStates[2], backLeftModule.getSteerAngle());
         SwerveModuleState backRightOptimized = optimizeModuleState(desiredStates[3], backRightModule.getSteerAngle());
 
         frontLeftModule.set(frontLeftOptimized.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, frontLeftOptimized.angle.getRadians());
-        frontRightModule.set(frontRightOptimzed.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, frontRightOptimzed.angle.getRadians());
-        backLeftModule.set(backLeftOptimzed.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, backLeftOptimzed.angle.getRadians());
+        frontRightModule.set(frontRightOptimized.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, frontRightOptimized.angle.getRadians());
+        backLeftModule.set(backLeftOptimized.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, backLeftOptimized.angle.getRadians());
         backRightModule.set(backRightOptimized.speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, backRightOptimized.angle.getRadians());
     }
 
