@@ -5,8 +5,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-
-import static frc.team3256.robot.Constants.IDConstants.*;
+import frc.team3256.robot.Constants.SwerveConstants;
 
 /**
  * A Class to test if CAN devices are online
@@ -69,7 +68,7 @@ public class CANTest {
      * @return Returns whether the Pigeon is online
      */
     private static boolean testPigeon() {
-        PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
+        PigeonIMU pigeon = new PigeonIMU(SwerveConstants.DRIVETRAIN_PIGEON_ID);
         double temp = pigeon.getTemp();
         if (temp == 0) {
             System.out.println("Pigeon is Offline");
