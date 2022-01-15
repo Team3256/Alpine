@@ -224,3 +224,10 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,macos,windows,gradle,intellij,intellij+all
+
+#Extra Files we Don't Need
+/target/
+/.classpath
+/*.project
+/.settings
+/*.springBeans
