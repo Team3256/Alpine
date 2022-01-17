@@ -69,6 +69,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return AutoChooser.getCommand();
     }
+
     public void resetPose() {
         drivetrainSubsystem.resetOdometry(new Pose2d());
     }

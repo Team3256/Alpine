@@ -43,7 +43,7 @@ public class Paths {
                        waypoints,
                 config);
 
-        var thetaController =
+        ProfiledPIDController thetaController =
                 new ProfiledPIDController(
                         P_THETA_CONTROLLER, I_THETA_CONTROLLER, D_THETA_CONTROLLER, Constants.AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
@@ -52,6 +52,7 @@ public class Paths {
                 trajectory1,
                 robotDrive::getPose, // Functional interface to feed supplies
                 robotDrive.getKinematics(),
+
 
                 // Position controllers
                 new PIDController(P_X_CONTROLLER, I_X_CONTROLLER, D_X_CONTROLLER),
