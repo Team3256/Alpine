@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.team3256.robot.Constants;
 import frc.team3256.robot.subsystems.SwerveDrive;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static frc.team3256.robot.Constants.AutoConstants.*;
@@ -28,17 +29,19 @@ public class Paths {
                         // Add kinematics to ensure max speed is actually obeyed
                         .setKinematics(robotDrive.getKinematics());
 
-        List<Translation2d> waypoints = List.of(new Translation2d(Units.inchesToMeters(12), 0)); // JSONReader.ParseJSONFile("");
+        List<Pose2d> waypoints = new ArrayList<>();
+        for(int pos = 0; pos <= 30; pos++){
+            waypoints.add(new Pose2d(Units.inchesToMeters(pos), 0, new Rotation2d()));
+        }
+//        List<Translation2d> waypoints = List.of(new Translation2d(Units.inchesToMeters(12), 0));s
+        // JSONReader.ParseJSONFile("");
 
         // An example trajectory to follow.  All units in meters.
         Trajectory trajectory1 =
                 TrajectoryGenerator.generateTrajectory(
                         // Start at the origin facing the +X direction
-                        new Pose2d(0, 0, new Rotation2d(0)),
-                        // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(Units.inchesToMeters(5), 0)),                        // End 200 inches straight ahead of where we started, facing forward
-                        new Pose2d(Units.inchesToMeters(20), 0, new Rotation2d(Units.degreesToRadians(0))),
-                        config);
+                       waypoints,
+                config);
 
         var thetaController =
                 new ProfiledPIDController(
@@ -47,7 +50,7 @@ public class Paths {
 
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
                 trajectory1,
-                robotDrive::getPose, // Functional interface to feed supplie
+                robotDrive::getPose, // Functional interface to feed supplies
                 robotDrive.getKinematics(),
 
                 // Position controllers

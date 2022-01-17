@@ -50,19 +50,19 @@ public final class Constants {
         public static final double[] BACK_LEFT = {-0.5,0.5};
         public static final double[] BACK_RIGHT = {-0.5,-0.5};
 
-        public static double MAX_SPEED_CONTROLLER_METERS_PER_SECOND = 3;
+        public static double MAX_SPEED_CONTROLLER_METERS_PER_SECOND = 2;
         public static double MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQUARED = 3;
         public static TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(Math.PI, Math.PI);
 
-        public static double P_X_CONTROLLER = 1;
-        public static double I_X_CONTROLLER = 0;
+        public static double P_X_CONTROLLER = 0.4;
+        public static double I_X_CONTROLLER = 0.025;
         public static double D_X_CONTROLLER = 0;
 
-        public static double P_Y_CONTROLLER = 1;
-        public static double I_Y_CONTROLLER = 0;
+        public static double P_Y_CONTROLLER = 0.4;
+        public static double I_Y_CONTROLLER = 0.025;
         public static double D_Y_CONTROLLER = 0;
 
-        public static double P_THETA_CONTROLLER = 1;
+        public static double P_THETA_CONTROLLER = 5;
         public static double I_THETA_CONTROLLER = 0;
         public static double D_THETA_CONTROLLER = 0;
 
