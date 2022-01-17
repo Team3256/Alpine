@@ -34,7 +34,6 @@ public class SwerveDrive extends SubsystemBase {
             // Back right
             new Translation2d(-DRIVETRAIN_TRACK_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
-    private final Field2d field = new Field2d();
     private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
 
     private final SwerveModule frontLeftModule;
@@ -95,7 +94,6 @@ public class SwerveDrive extends SubsystemBase {
                 BACK_RIGHT_MODULE_STEER_ENCODER,
                 BACK_RIGHT_MODULE_STEER_OFFSET
         );
-        SmartDashboard.putData("Field", field);
     }
 
     /**
@@ -154,7 +152,6 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void outputToDashboard() {
-        SmartDashboard.putData("Field", field);
 
         SmartDashboard.putNumber("Front Left Speed", frontLeftModule.getDriveVelocity());
         SmartDashboard.putNumber("Front Right Speed", frontRightModule.getDriveVelocity());
@@ -187,10 +184,6 @@ public class SwerveDrive extends SubsystemBase {
 
         pose = odometry.update(gyroAngle, frontRightState, backRightState,
                 frontLeftState, backLeftState);
-        field.setRobotPose(pose);
-
-
-
 
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
         setModuleStates(states);
