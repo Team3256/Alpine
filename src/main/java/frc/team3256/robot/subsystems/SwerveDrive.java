@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.team3256.robot.Constants.SwerveConstants.*;
@@ -24,16 +25,15 @@ import static frc.team3256.robot.Constants.SwerveConstants.*;
 public class SwerveDrive extends SubsystemBase {
     public static final double MAX_VOLTAGE = 12.0;
     private static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-            // Front left
+            // Front Right
             new Translation2d(DRIVETRAIN_TRACK_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
-            // Front right
+            // Back right
             new Translation2d(DRIVETRAIN_TRACK_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
-            // Back left
+            // Front left
             new Translation2d(-DRIVETRAIN_TRACK_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
             // Back right
             new Translation2d(-DRIVETRAIN_TRACK_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
-    private final Field2d field = new Field2d();
     private final PigeonIMU pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
 
     private final SwerveModule frontLeftModule;
@@ -55,7 +55,7 @@ public class SwerveDrive extends SubsystemBase {
                         .withSize(2, 4)
                         .withPosition(0, 0),
                 // This can either be STANDARD or FAST depending on your gear configuration
-                Mk3SwerveModuleHelper.GearRatio.STANDARD,
+                Mk3SwerveModuleHelper.GearRatio.FAST,
                 FRONT_LEFT_MODULE_DRIVE_MOTOR,
                 FRONT_LEFT_MODULE_STEER_MOTOR,
                 FRONT_LEFT_MODULE_STEER_ENCODER,
@@ -66,7 +66,7 @@ public class SwerveDrive extends SubsystemBase {
                 tab.getLayout("Front Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(2, 0),
-                Mk3SwerveModuleHelper.GearRatio.STANDARD,
+                Mk3SwerveModuleHelper.GearRatio.FAST,
                 FRONT_RIGHT_MODULE_DRIVE_MOTOR,
                 FRONT_RIGHT_MODULE_STEER_MOTOR,
                 FRONT_RIGHT_MODULE_STEER_ENCODER,
@@ -77,7 +77,7 @@ public class SwerveDrive extends SubsystemBase {
                 tab.getLayout("Back Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(4, 0),
-                Mk3SwerveModuleHelper.GearRatio.STANDARD,
+                Mk3SwerveModuleHelper.GearRatio.FAST,
                 BACK_LEFT_MODULE_DRIVE_MOTOR,
                 BACK_LEFT_MODULE_STEER_MOTOR,
                 BACK_LEFT_MODULE_STEER_ENCODER,
@@ -88,13 +88,12 @@ public class SwerveDrive extends SubsystemBase {
                 tab.getLayout("Back Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(6, 0),
-                Mk3SwerveModuleHelper.GearRatio.STANDARD,
+                Mk3SwerveModuleHelper.GearRatio.FAST,
                 BACK_RIGHT_MODULE_DRIVE_MOTOR,
                 BACK_RIGHT_MODULE_STEER_MOTOR,
                 BACK_RIGHT_MODULE_STEER_ENCODER,
                 BACK_RIGHT_MODULE_STEER_OFFSET
         );
-        SmartDashboard.putData("Field", field);
     }
 
     /**
@@ -153,7 +152,6 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void outputToDashboard() {
-        SmartDashboard.putData("Field", field);
 
         SmartDashboard.putNumber("Front Left Speed", frontLeftModule.getDriveVelocity());
         SmartDashboard.putNumber("Front Right Speed", frontRightModule.getDriveVelocity());
@@ -164,6 +162,8 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("Front Right Angle", frontRightModule.getSteerAngle());
         SmartDashboard.putNumber("Back Left Angle", backLeftModule.getSteerAngle());
         SmartDashboard.putNumber("Back Right Angle", backRightModule.getSteerAngle());
+        SmartDashboard.putNumber("Position in Inches", Units.metersToInches(pose.getTranslation().getX()));
+
         short[] r = new short[3];
         pigeon.getBiasedAccelerometer(r);
         SmartDashboard.putNumber("Gyro Acceleration", r[2]);
@@ -182,10 +182,8 @@ public class SwerveDrive extends SubsystemBase {
         SwerveModuleState backLeftState = new SwerveModuleState(backLeftModule.getDriveVelocity(), new Rotation2d(backLeftModule.getSteerAngle()));
         SwerveModuleState backRightState = new SwerveModuleState(backRightModule.getDriveVelocity(), new Rotation2d(backRightModule.getSteerAngle()));
 
-        pose = odometry.update(gyroAngle, frontLeftState, frontRightState,
-                backLeftState, backRightState);
-        field.setRobotPose(pose);
-
+        pose = odometry.update(gyroAngle, frontRightState, backRightState,
+                frontLeftState, backLeftState);
 
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
         setModuleStates(states);
