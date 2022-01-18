@@ -17,13 +17,13 @@ public class AutoChooser {
         autoChooser = new SendableChooser<>();
 
         Command doNothing = new DefaultDriveCommand(drive); // dont move
-        autoChooser.setDefaultOption("Do Nothing", doNothing);
+        autoChooser.setDefaultOption("Do Nothing rip :(((((", doNothing);
 
         Command trajectory1 = Paths.getTrajectory1(drive);
-        autoChooser.addOption("Trajectory 1", trajectory1);
+        autoChooser.addOption("SwerveControllerCommand Follower (BAd)", trajectory1);
 
-//        Command trajectory2 = Paths.getTrajectory2(drive);
-//        autoChooser.addOption("Traj 2", trajectory2);
+        Command trajectory2 = Paths.getTrajectory2(drive);
+        autoChooser.addOption("Custom Path Follower", trajectory2);
 //
 //        Command trajectory3 = Paths.getTrajectory3(drive);
 //        autoChooser.addOption("Traj 3", trajectory3);

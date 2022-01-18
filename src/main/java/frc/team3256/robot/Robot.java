@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    robotContainer.autoOutputToDashboard();
   }
 
 

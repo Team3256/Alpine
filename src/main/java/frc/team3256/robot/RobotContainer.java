@@ -80,7 +80,7 @@ public class RobotContainer {
                         .setKinematics(drivetrainSubsystem.getKinematics());
 
         List<Pose2d> waypoints = new ArrayList<>();
-        for(int pos = 0; pos <= 30; pos++){
+        for(int pos = 0; pos <= 80; pos++){
             waypoints.add(new Pose2d(Units.inchesToMeters(pos), 0, new Rotation2d()));
         }
 //        List<Translation2d> waypoints = List.of(new Translation2d(Units.inchesToMeters(12), 0));s

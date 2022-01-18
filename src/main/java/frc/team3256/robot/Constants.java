@@ -52,21 +52,23 @@ public final class Constants {
 
 
         public static double MAX_SPEED_CONTROLLER_METERS_PER_SECOND = 2;
-        public static double MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQUARED = 3;
-        public static TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(Math.PI, Math.PI);
+        public static double MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQUARED = 2;
+        public static TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = new TrapezoidProfile.Constraints(2.5 * Math.PI, 1.5 * Math.PI);
 
-        public static double P_X_CONTROLLER = 0.4;
+        public static double P_X_CONTROLLER = 2.2;
         public static double I_X_CONTROLLER = 0.025;
         public static double D_X_CONTROLLER = 0;
 
-        public static double P_Y_CONTROLLER = 0.4;
+        public static double P_Y_CONTROLLER = 2.2;
         public static double I_Y_CONTROLLER = 0.025;
         public static double D_Y_CONTROLLER = 0;
 
-        public static double P_THETA_CONTROLLER = 5;
+        public static double TRANSLATION_FF = 0.3;
+
+        public static double P_THETA_CONTROLLER = 2.2;
         public static double I_THETA_CONTROLLER = 0;
         public static double D_THETA_CONTROLLER = 0;
-
+        public static double THETA_FF = 7.5;
     }
 
     public static class CANConstants {
