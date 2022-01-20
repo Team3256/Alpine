@@ -1,14 +1,9 @@
 package frc.team3256.robot.commands;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.controller.HolonomicDriveController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -22,7 +17,7 @@ public class TrajectoryFollowCommand extends CommandBase {
     private final Timer timer = new Timer();
     private final Trajectory trajectory;
     private final SwerveDriveController controller;
-    private final Rotation2d desiredRotationFinalRotation;
+    private final Rotation2d desiredFinalRotation;
     private final SwerveDrive driveSubsystem;
     private final double trajectoryDuration;
 
@@ -41,7 +36,7 @@ public class TrajectoryFollowCommand extends CommandBase {
                 yController,
                 thetaController
         );
-        this.desiredRotationFinalRotation = desiredRotation;
+        this.desiredFinalRotation = desiredRotation;
         this.driveSubsystem = driveSubsystem;
 
         addRequirements(driveSubsystem);
@@ -60,9 +55,10 @@ public class TrajectoryFollowCommand extends CommandBase {
         Pose2d currentPose = driveSubsystem.getPose();
         Pose2d desiredPose = desired.poseMeters;
         double desiredLinearVelocity = desired.velocityMetersPerSecond;
-        double thetaFF = this.desiredRotationFinalRotation.getRadians() / trajectoryDuration * 0.02 * THETA_FF; // 20ms loop time
-        double thetaSetpoint = this.desiredRotationFinalRotation.getRadians() * (now/trajectoryDuration);
-        Rotation2d desiredRotation = new Rotation2d(thetaSetpoint + thetaFF);
+
+        // Move to the desried rotaion 3/4 of the way through the whole trajectory
+        double thetaSetpoint = this.desiredFinalRotation.getRadians() >= 0 ? 1 : -1 * Math.min(this.desiredFinalRotation.getRadians() * (now/(trajectoryDuration * 0.75)), this.desiredFinalRotation.getRadians());
+        Rotation2d desiredRotation = new Rotation2d(thetaSetpoint);
 
         SmartDashboard.putNumber("Desired Rotation", Units.radiansToDegrees(thetaSetpoint));
         SmartDashboard.putNumber("Current Rotation", currentPose.getRotation().getDegrees());
