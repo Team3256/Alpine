@@ -2,9 +2,24 @@ package frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.team3256.robot.commands.ExampleCommand;
-import frc.team3256.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.team3256.robot.auto.AutoChooser;
+import frc.team3256.robot.commands.DefaultDriveCommand;
+import frc.team3256.robot.subsystems.SwerveDrive;
+import frc.team3256.robot.Constants.SwerveConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -14,12 +29,28 @@ import frc.team3256.robot.subsystems.ExampleSubsystem;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    private final SwerveDrive drivetrainSubsystem = new SwerveDrive();
+    private final Field2d field = new Field2d();
+    private final XboxController controller = new XboxController(0);
 
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     *
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
+        // Set up the default command for the drivetrain.
+        // The controls are for field-oriented driving:
+        // Left stick Y axis -> forward and backwards movement
+        // Left stick X axis -> left and right movement
+        // Right stick X axis -> rotationx
+
+       drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+                drivetrainSubsystem,
+                () -> -modifyAxis(controller.getY(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(controller.getX(GenericHID.Hand.kLeft)) * SwerveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(controller.getX(GenericHID.Hand.kRight)) * SwerveConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+        ));
+
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -30,7 +61,40 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {}
+    private void configureButtonBindings() {
+        // Back button zeros the gyroscope
+        new Button(controller::getAButton)
+                // No requirements because we don't need to interrupt anything
+                .whenPressed(drivetrainSubsystem::zeroGyroscope);
+    }
+    public SendableChooser<Command> getCommandChooser() {
+        return AutoChooser.getDefaultChooser(drivetrainSubsystem);
+    }
+
+    public Trajectory getTrajectory() { // FIXME: scuffed rn, pls fix later
+        TrajectoryConfig config =
+                new TrajectoryConfig(
+                        Constants.AutoConstants.MAX_SPEED_CONTROLLER_METERS_PER_SECOND,
+                        Constants.AutoConstants.MAX_ACCELERATION_CONTROLLER_METERS_PER_SECOND_SQUARED)
+                        // Add kinematics to ensure max speed is actually obeyed
+                        .setKinematics(drivetrainSubsystem.getKinematics());
+
+        List<Pose2d> waypoints = new ArrayList<>();
+        for(int pos = 0; pos <= 80; pos++){
+            waypoints.add(new Pose2d(Units.inchesToMeters(pos), 0, new Rotation2d()));
+        }
+//        List<Translation2d> waypoints = List.of(new Translation2d(Units.inchesToMeters(12), 0));s
+        // JSONReader.ParseJSONFile("");
+
+        // An example trajectory to follow.  All units in meters.
+        Trajectory trajectory1 =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        waypoints,
+                        config);
+
+        return trajectory1;
+    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -38,7 +102,41 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return m_autoCommand;
+        return AutoChooser.getCommand();
+    }
+
+    public void resetPose() {
+        drivetrainSubsystem.resetOdometry(new Pose2d());
+    }
+
+    public void sendTrajectoryToDashboard() {
+        field.getObject("traj").setTrajectory(getTrajectory());
+    }
+
+    public void autoOutputToDashboard() {
+        field.setRobotPose(drivetrainSubsystem.getPose());
+        SmartDashboard.putData("Field", field);
+    }
+
+    private static double deadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+            if (value > 0.0) {
+                return (value - deadband) / (1.0 - deadband);
+            } else {
+                return (value + deadband) / (1.0 - deadband);
+            }
+        } else {
+            return 0.0;
+        }
+    }
+
+    private static double modifyAxis(double value) {
+        // Deadband
+        value = deadband(value, 0.05);
+
+        // Square the axis
+        value = Math.copySign(value * value, value);
+
+        return value;
     }
 }
