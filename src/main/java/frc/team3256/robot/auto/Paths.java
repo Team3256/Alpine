@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -48,12 +47,12 @@ public class Paths {
                 new ProfiledPIDController(
                         P_THETA_CONTROLLER, I_THETA_CONTROLLER, D_THETA_CONTROLLER, Constants.AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
                 trajectory1,
-                robotDrive::getPose, // Functional interface to feed supplies
-                robotDrive.getKinematics(),
+                robotDrive::getPose,
 
+                // Functional interface to feed supplies
+                robotDrive.getKinematics(),
 
                 // Position controllers
                 new PIDController(P_X_CONTROLLER, I_X_CONTROLLER, D_X_CONTROLLER),
@@ -92,12 +91,13 @@ public class Paths {
                         P_THETA_CONTROLLER, I_THETA_CONTROLLER, D_THETA_CONTROLLER, Constants.AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
+        UniformThetaSupplier thetaFeed = new UniformThetaSupplier(trajectory2.getTotalTimeSeconds(), new Rotation2d(Units.degreesToRadians(180)), 0.75);
         TrajectoryFollowCommand trajectoryFollowCommand = new TrajectoryFollowCommand(
                 trajectory2,
                 new PIDController(P_X_CONTROLLER, I_X_CONTROLLER, D_X_CONTROLLER),
                 new PIDController(P_Y_CONTROLLER, I_Y_CONTROLLER, D_Y_CONTROLLER),
+                thetaFeed::rotationSupply,
                 thetaController,
-                new Rotation2d(Units.degreesToRadians(180)),
                 robotDrive
         );
 
